@@ -28,6 +28,11 @@
       <email>gspanglett@gmail.com</email>
       <uri>https://gspanglett.github.io</uri>
     </contributor>
+    <contributor>
+      <name>Dean Tessaro</name>
+      <email>deantessarouoft@gmail.com</email>
+      <uri>https://github.com/dntessaro</uri>
+    </contributor>
     <category citation-format="note"/>
     <category field="law"/>
     <updated>2022-03-09T22:53:52+00:00</updated>
@@ -256,7 +261,7 @@
                       <text macro="juris-title" font-style="italic" strip-periods="true"/>
                     </group>
                     <choose>
-                      <if variable="volume page container-title" match="all">
+                      <if variable="volume number container-title" match="all">
                         <text macro="juris-locator"/>
                         <group delimiter=" ">
                           <text term="part" form="long"/>
@@ -266,8 +271,17 @@
                         </group>
                         <group delimiter=" ">
                           <text term="schedule" form="long"/>
-                          <number variable="page"/>
+                          <text variable="number"/>
                           <text term="from" form="verb"/>
+                          <text variable="genre" font-style="italic"/>
+                          <text variable="collection-number" prefix="(" suffix=")"/>
+                        </group>
+                        <group delimiter=" ">
+                          <date variable="issued" form="text" date-parts="year" suffix=","/>
+                        </group>
+                        <group delimiter=" ">
+                          <text term="chapter" form="short"/>
+                          <text variable="publisher"/>
                         </group>
                       </if>
                       <else-if variable="page">
@@ -1065,7 +1079,10 @@
       </group>
       <text macro="container-title"/>
       <text variable="collection-title" prefix="(" suffix=")"/>
+     <group delimiter=", ">
       <number variable="page-first"/>
+      <text variable="archive"/>
+     </group>
     </group>
   </macro>
   <macro name="render-book">
