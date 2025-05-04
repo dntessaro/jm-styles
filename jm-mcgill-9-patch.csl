@@ -1055,9 +1055,7 @@
         </group>
       </if>
     <else-if variable="author editor" match="all">
-
           <text term="editor" form="verb-short" strip-periods="true"/>
-       
     </else-if>
       <else>
         <number variable="edition" text-case="lowercase"/>
@@ -1171,7 +1169,7 @@
             <text macro="translator"/>
               <group delimiter="">
                 <text value="vol"/>
-                 <number variable="volume" form="numeric" suffix=", "/>
+                 <number variable="volume" form="numeric" prefix=" " suffix=", "/>
                  <text macro="series-info"/>
                  <text macro="publisher-place-year"/> 
               </group>
