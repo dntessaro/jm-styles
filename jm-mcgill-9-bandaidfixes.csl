@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.1mlz1" year-range-format="expanded" require-comma-on-symbol="after-number">
   <info>
-    <title>JM - Canadian Guide to Uniform Legal Citation (9th edition) / Manuel canadien de la référence juridique (9ᵉ édition)</title>
+    <title>JM - Canadian Guide to Uniform Legal Citation (9th edition) / Manuel canadien de la référence juridique (9ᵉ édition) [dt fix] </title>
     <id>http://juris-m.github.io/styles/jm-mcgill-v9</id>
     <link href="http://juris-m.github.io/styles/jm-mgcill-v9" rel="self"/>
     <link href="https://lawjournal.mcgill.ca/fr/manuel-de-reference/" rel="documentation"/>
@@ -120,7 +120,7 @@
       <term name="issue" form="verb">Catalogue No</term>
       <term name="number" form="long">No</term>
       <term name="chapter" form="short">c</term>
-      <term name="editor" form="verb-short">ed</term>
+      <term name="editor" form="verb-short">ed by </term>
       <term name="editor" form="short">ed</term>
       <term name="collection-editor" form="short">ed</term>
       <term name="collection-editor" form="long">Chair:</term>
@@ -931,11 +931,41 @@
     </choose>
   </macro>
   <macro name="editor">
-    <names variable="editor">
-      <name and="symbol" delimiter-precedes-last="never"/>
-      <et-al term="et-al"/>
-      <label form="short" prefix=", "/>
-    </names>
+   <choose>
+     <if type="book">
+      <choose>
+     <if variable="edition author" match="all">
+        <text macro="edition"/>
+        <names variable="editor">
+          <name and="symbol" delimiter-precedes-last="never"/>
+          <et-al term="et-al"/>
+        </names>
+       </if>
+    <else-if variable="author editor" match="all">
+        <text value="ed by "/>
+        <names variable="editor">
+          <name and="symbol" delimiter-precedes-last="never"/>
+          <et-al term="et-al"/>
+        </names>
+    </else-if>
+       <else>
+        <names variable="editor">
+          <name and="symbol" delimiter-precedes-last="never"/>
+          <et-al term="et-al"/>
+          <label form="short" prefix=", "/>
+        </names>
+       </else>
+      </choose>
+     </if>
+
+     <else>
+        <names variable="editor">
+          <name and="symbol" delimiter-precedes-last="never"/>
+          <et-al term="et-al"/>
+          <label form="short" prefix=", "/>
+        </names>
+     </else>
+   </choose>
   </macro>
   <macro name="translator">
     <names variable="translator">
@@ -1015,22 +1045,45 @@
     </date>
   </macro>
   <macro name="edition">
+   <choose>
+    <if variable="edition author editor" match="all">
+     <choose>
+      <if is-numeric="edition">
+        <group delimiter=" ">
+          <number variable="edition" form="ordinal" text-case="lowercase"/>
+          <text term="editor" form="verb-short" strip-periods="true"/>
+        </group>
+      </if>
+    <else-if variable="author editor" match="all">
+
+          <text term="editor" form="verb-short" strip-periods="true"/>
+       
+    </else-if>
+      <else>
+        <number variable="edition" text-case="lowercase"/>
+      </else>
+     </choose>
+    </if>
+    <else>
     <choose>
       <if is-numeric="edition">
         <group delimiter=" ">
           <number variable="edition" form="ordinal" text-case="lowercase"/>
-          <text term="edition" form="short" strip-periods="true"/>
+          <text term="editor" form="short" strip-periods="true"/>
         </group>
       </if>
       <else>
         <number variable="edition" text-case="lowercase"/>
       </else>
-    </choose>
+     </choose>
+    </else>
+   </choose>
   </macro>
   <macro name="series-info">
-    <group delimiter=" ">
-      <text variable="collection-title" strip-periods="true"/>
-      <number variable="collection-number"/>
+    <group delimiter=", ">
+       <text variable="volume-title" font-style="italic"/>
+     <text variable="collection-title" strip-periods="true" font-style="italic"/>
+<!--  <number variable="collection-number"/> commented out - unclear how series # would be used in McGill -->
     </group>
   </macro>
   <macro name="sort-by-type">
@@ -1077,24 +1130,178 @@
         <number variable="volume"/>
         <number variable="issue"/>
       </group>
-      <text macro="container-title"/>
-      <text variable="collection-title" prefix="(" suffix=")"/>
-     <group delimiter=", ">
-      <number variable="page-first"/>
-      <text variable="archive"/>
-     </group>
+       <text macro="container-title"/>
+       <text variable="collection-title" prefix="(" suffix=")"/>
+      <group delimiter=", ">
+       <number variable="page-first"/>
+       <text variable="archive"/>
+       </group>
     </group>
   </macro>
   <macro name="render-book">
+   <choose>
+    <if variable="author" match="none">
+      <group delimiter=", ">
+       <text macro="editor"/>
+      </group>
+    </if>
+   </choose>
+   <choose>
+    <if variable="volume-title collection-title" match="any">
+     <choose>
+       <if variable="volume" match="all">
+        <choose>
+         <if variable="author" match="none">
+           <group delimiter=", ">
+            <text variable="title" font-style="italic"/>
+            <text macro="edition"/>
+            <text macro="translator"/>
+              <group delimiter=" ">
+                <text value="vol"/>
+                 <number variable="volume" form="numeric" suffix=", "/>
+                 <text macro="series-info"/>
+                 <text macro="publisher-place-year"/> 
+              </group>
+           </group>
+         </if>
+         <else>
+           <group delimiter=", ">
+            <text variable="title" font-style="italic"/>
+            <text macro="editor"/>
+            <text macro="translator"/>
+              <group delimiter=" ">
+                <text value="vol"/>
+                 <number variable="volume" form="numeric" suffix=", "/>
+                 <text macro="series-info"/>
+                 <text macro="publisher-place-year"/> 
+              </group>
+           </group>
+         </else>
+        </choose>
+       </if>
+       <else>
+        <group delimiter=", ">
+         <text variable="title" font-style="italic"/>
+         <text macro="edition"/>
+         <text macro="translator"/>
+         <text macro="editor"/>
+           <group delimiter=" ">
+              <text macro="series-info"/>
+              <text macro="publisher-place-year"/> 
+           </group>
+        </group>
+       </else>
+      </choose>
+    </if>
+    <else-if variable="volume" match="all">
+       <choose>
+       <if variable="edition translator editor" match="none">
+        <group delimiter=", ">
+           <group delimiter=" ">
+             <text variable="title" font-style="italic"/>
+             <text macro="publisher-place-year"/>
+             <text value="vol"/>
+             <number variable="volume" form="numeric"/>
+           </group>
+        </group>
+       </if>
+       <else-if variable="translator editor" match="none">
+        <group delimiter=", ">
+         <text variable="title" font-style="italic"/>
+           <group delimiter=" ">
+             <text macro="edition"/>
+             <text macro="publisher-place-year"/>
+             <text value="vol"/>
+             <number variable="volume" form="numeric"/>
+           </group>
+        </group>
+       </else-if>
+       <else-if variable="edition translator" match="none">
+        <group delimiter=", ">
+             <text variable="title" font-style="italic"/>
+           <group delimiter=" ">
+             <text macro="editor"/>
+             <text macro="publisher-place-year"/>
+             <text value="vol"/>
+             <number variable="volume" form="numeric"/>
+           </group>
+        </group>
+       </else-if>
+       <else-if variable="edition editor" match="none">
+        <group delimiter=", ">
+             <text variable="title" font-style="italic"/>
+           <group delimiter=" ">
+             <text macro="translator"/>
+             <text macro="publisher-place-year"/>
+             <text value="vol"/>
+             <number variable="volume" form="numeric"/>
+           </group>
+        </group>
+       </else-if>
+       <else-if variable="translator" match="none">
+        <group delimiter=", ">
+         <text variable="title" font-style="italic"/>
+           <group delimiter=" ">
+             <text macro="editor"/>
+             <text macro="publisher-place-year"/>
+             <text value="vol"/>
+             <number variable="volume" form="numeric"/>
+           </group>
+        </group>
+       </else-if>
+       <else-if variable="editor" match="none">
+        <group delimiter=", ">
+         <text variable="title" font-style="italic"/>
+         <text macro="editor"/>
+           <group delimiter=" ">
+             <text macro="translator"/>
+             <text macro="publisher-place-year"/>
+             <text value="vol"/>
+             <number variable="volume" form="numeric"/>
+           </group>
+        </group>
+       </else-if>
+       <else-if variable="edition" match="none">
+        <group delimiter=", ">
+             <text variable="title" font-style="italic"/>
+             <text macro="editor"/>
+           <group delimiter=" ">
+             <text macro="translator"/>
+             <text macro="publisher-place-year"/>
+             <text value="vol"/>
+             <number variable="volume" form="numeric"/>
+           </group>
+        </group>
+       </else-if>
+       <else>
+        <group delimiter=", ">
+          <text variable="title" font-style="italic"/>  
+              <text macro="editor"/>  
+            <group delimiter=" ">
+          <text macro="translator"/>
+              <text macro="publisher-place-year"/>
+              <text value="vol"/>
+              <text variable="volume"/>
+            </group>
+        </group>
+       </else>
+      </choose>
+     </else-if>
+    <else>
     <group delimiter=", ">
       <text variable="title" font-style="italic"/>
-      <text macro="edition"/>
       <text macro="translator"/>
       <text macro="editor"/>
       <text macro="series-info"/>
+        <group delimiter=" ">
+          <text value="vol"/>
+          <text variable="volume"/>
+        </group>
     </group>
-    <text macro="publisher-place-year"/>
-  </macro>
+      <text macro="publisher-place-year"/>
+    </else>
+</choose>
+ </macro>
   <macro name="render-report">
     <choose>
       <if variable="committee authority">
@@ -1332,10 +1539,28 @@
         <text macro="pinpoint"/>
         <group delimiter=" " prefix="(" suffix=")">
           <text value="entered into force"/>
-          <date variable="issued" form="text" suffix=","/>
-          <text value="accession by"/>
-          <text variable="version"/>
-          <date variable="original-date" form="text"/>
+            <choose>
+              <if variable="original-date" match="all">
+                <date variable="issued" form="text" suffix=","/>
+                <text value="accession by"/>
+                <text variable="version"/>
+                <date variable="original-date" form="text"/>
+              </if>
+              <else-if variable="version" match="all">
+                <date variable="issued" form="text" suffix=","/>
+                <text variable="version"/>
+              </else-if>
+              <else>
+                <date variable="issued" form="text"/>
+              </else>
+            </choose>
+          </group>
+        <group delimiter=" ">
+            <choose>
+              <if variable="title-short" match="all">
+                <text variable="title-short" font-style="italic" prefix="[" suffix="]"/> 
+              </if>
+            </choose>
         </group>
       </group>
     </group>
