@@ -1158,7 +1158,7 @@
             <text macro="translator"/>
               <group delimiter="">
                 <text value="vol"/>
-                 <number variable="volume" form="numeric" suffix=", "/>
+                 <number variable="volume" form="numeric" prefix=" " suffix=", "/>
                  <text macro="series-info"/>
                  <text macro="publisher-place-year"/> 
               </group>
