@@ -1156,7 +1156,7 @@
             <text variable="title" font-style="italic"/>
             <text macro="edition"/>
             <text macro="translator"/>
-              <group delimiter=" ">
+              <group delimiter="">
                 <text value="vol"/>
                  <number variable="volume" form="numeric" suffix=", "/>
                  <text macro="series-info"/>
@@ -1169,7 +1169,7 @@
             <text variable="title" font-style="italic"/>
             <text macro="editor"/>
             <text macro="translator"/>
-              <group delimiter=" ">
+              <group delimiter="">
                 <text value="vol"/>
                  <number variable="volume" form="numeric" suffix=", "/>
                  <text macro="series-info"/>
@@ -1185,7 +1185,7 @@
          <text macro="edition"/>
          <text macro="translator"/>
          <text macro="editor"/>
-           <group delimiter=" ">
+           <group delimiter="">
               <text macro="series-info"/>
               <text macro="publisher-place-year"/> 
            </group>
@@ -1197,7 +1197,7 @@
        <choose>
        <if variable="edition translator editor" match="none">
         <group delimiter=", ">
-           <group delimiter=" ">
+           <group delimiter="">
              <text variable="title" font-style="italic"/>
              <text macro="publisher-place-year"/>
              <text value="vol"/>
@@ -1208,7 +1208,7 @@
        <else-if variable="translator editor" match="none">
         <group delimiter=", ">
          <text variable="title" font-style="italic"/>
-           <group delimiter=" ">
+           <group delimiter="">
              <text macro="edition"/>
              <text macro="publisher-place-year"/>
              <text value="vol"/>
@@ -1219,7 +1219,7 @@
        <else-if variable="edition translator" match="none">
         <group delimiter=", ">
              <text variable="title" font-style="italic"/>
-           <group delimiter=" ">
+           <group delimiter="">
              <text macro="editor"/>
              <text macro="publisher-place-year"/>
              <text value="vol"/>
@@ -1230,7 +1230,7 @@
        <else-if variable="edition editor" match="none">
         <group delimiter=", ">
              <text variable="title" font-style="italic"/>
-           <group delimiter=" ">
+           <group delimiter="">
              <text macro="translator"/>
              <text macro="publisher-place-year"/>
              <text value="vol"/>
@@ -1241,7 +1241,7 @@
        <else-if variable="translator" match="none">
         <group delimiter=", ">
          <text variable="title" font-style="italic"/>
-           <group delimiter=" ">
+           <group delimiter="">
              <text macro="editor"/>
              <text macro="publisher-place-year"/>
              <text value="vol"/>
@@ -1253,7 +1253,7 @@
         <group delimiter=", ">
          <text variable="title" font-style="italic"/>
          <text macro="editor"/>
-           <group delimiter=" ">
+           <group delimiter="">
              <text macro="translator"/>
              <text macro="publisher-place-year"/>
              <text value="vol"/>
@@ -1265,7 +1265,7 @@
         <group delimiter=", ">
              <text variable="title" font-style="italic"/>
              <text macro="editor"/>
-           <group delimiter=" ">
+           <group delimiter="">
              <text macro="translator"/>
              <text macro="publisher-place-year"/>
              <text value="vol"/>
@@ -1277,7 +1277,7 @@
         <group delimiter=", ">
           <text variable="title" font-style="italic"/>  
               <text macro="editor"/>  
-            <group delimiter=" ">
+            <group delimiter="">
           <text macro="translator"/>
               <text macro="publisher-place-year"/>
               <text value="vol"/>
@@ -1293,7 +1293,7 @@
       <text macro="translator"/>
       <text macro="editor"/>
       <text macro="series-info"/>
-        <group delimiter=" ">
+        <group delimiter="">
           <text value="vol"/>
           <text variable="volume"/>
         </group>
