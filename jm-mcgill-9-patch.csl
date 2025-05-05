@@ -261,7 +261,7 @@
                       <text macro="juris-title" font-style="italic" strip-periods="true"/>
                     </group>
                     <choose>
-                      <if variable="volume number container-title" match="all">
+                      <if variable="volume page container-title" match="all">
                         <text macro="juris-locator"/>
                         <group delimiter=" ">
                           <text term="part" form="long"/>
@@ -271,17 +271,27 @@
                         </group>
                         <group delimiter=" ">
                           <text term="schedule" form="long"/>
-                          <text variable="number"/>
+                          <text variable="page"/>
                           <text term="from" form="verb"/>
-                          <text variable="genre" font-style="italic"/>
-                          <text variable="collection-number" prefix="(" suffix=")"/>
-                        </group>
-                        <group delimiter=" ">
-                          <date variable="issued" form="text" date-parts="year" suffix=","/>
+                            <choose>
+                              <if variable="publisher" match="all">
+                               <text variable="genre" font-style="italic"/>
+                                <group delimiter=", ">
+                                 <text variable="publisher" prefix="(" suffix=")"/>
+                                 <date variable="issued" form="numeric" date-parts="year"/>
+                               </group>
+                              </if>
+                              <else>
+                                <group delimiter=", ">
+                               <text variable="genre" font-style="italic"/>
+                                 <text variable="collection-number"/>
+                               </group>
+                              </else>
+                            </choose>
                         </group>
                         <group delimiter=" ">
                           <text term="chapter" form="short"/>
-                          <text variable="publisher"/>
+                          <text variable="number" form="text"/>
                         </group>
                       </if>
                       <else-if variable="page">
@@ -291,12 +301,46 @@
                             <text term="schedule" form="verb"/>
                             <number variable="page"/>
                             <text term="from" form="verb"/>
+                            <choose>
+                              <if variable="publisher" match="all">
+                               <text variable="genre" font-style="italic"/>
+                                <group delimiter=", ">
+                                 <text variable="publisher" prefix="(" suffix=")"/>
+                                 <text variable="collection-number"/>
+                               </group>
+                              </if>
+                              <else>
+                                <group delimiter=", ">
+                               <text variable="genre" font-style="italic"/>
+                                 <text variable="collection-number"/>
+                               </group>
+                              </else>
+                            </choose>
                           </group>
+                        <group delimiter=" ">
+                          <text term="chapter" form="short"/>
+                          <text variable="number" form="text"/>
+                        </group>
                         </group>
                       </else-if>
                       <else>
-                        <text macro="juris-main" strip-periods="false"/>
                         <text macro="juris-locator" label-form="short"/>
+                        <group delimiter=" ">
+                          <text term="part" form="long"/>
+                          <number variable="volume" form="roman" text-case="uppercase"/>
+                          <text term="from" form="verb-short"/>
+                          <choose>
+                            <if variable="issued" match="all">
+                             <group delimiter=", ">
+                             <text variable="container-title" font-style="italic"/>
+                             <date variable="issued" form="numeric" date-parts="year"/>
+                             </group>
+                            </if>
+                            <else>
+                             <text variable="container-title" font-style="italic"/>
+                            </else>
+                          </choose>
+                        </group>
                       </else>
                     </choose>
                   </group>
