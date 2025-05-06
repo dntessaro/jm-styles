@@ -190,7 +190,7 @@
       <if>
         <conditions match="all">
           <condition type="legislation"/>
-          <condition match="none" variable="volume section container-title number"/>
+          <condition match="none" variable="volume section container-title number title"/>
           <condition match="all" variable="title-short"/>
         </conditions>
         <group delimiter=" ">
@@ -321,7 +321,7 @@
                           <text term="chapter" form="short"/>
                           <text variable="number" form="text"/>
                         </group>
-                        </group>
+                       </group>
                       </else-if>
                       <else>
                         <text macro="juris-locator" label-form="short"/>
@@ -1098,14 +1098,17 @@
           <text term="editor" form="verb-short" strip-periods="true"/>
         </group>
       </if>
-    <else-if variable="author editor" match="all">
-          <text term="editor" form="verb-short" strip-periods="true"/>
-    </else-if>
       <else>
-        <number variable="edition" text-case="lowercase"/>
+        <group delimiter=" ">
+          <number variable="edition"/>
+          <text term="editor" form="verb-short" strip-periods="true"/>
+        </group>
       </else>
      </choose>
     </if>
+    <else-if variable="author editor" match="all">
+     <text term="editor" form="verb-short" strip-periods="true"/>
+    </else-if>
     <else>
     <choose>
       <if is-numeric="edition">
@@ -1115,7 +1118,10 @@
         </group>
       </if>
       <else>
-        <number variable="edition" text-case="lowercase"/>
+       <group delimiter=" ">
+         <number variable="edition"/>
+         <text term="editor" form="short" strip-periods="true"/>
+       </group>
       </else>
      </choose>
     </else>
