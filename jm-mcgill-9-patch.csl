@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.1mlz1" year-range-format="expanded" require-comma-on-symbol="after-number">
   <info>
-    <title>JM - Canadian Guide to Uniform Legal Citation (9th edition) / Manuel canadien de la référence juridique (9ᵉ édition) [dt fix]</title>
-    <id>http://juris-m.github.io/styles/jm-mcgill-v9</id>
-    <link href="http://juris-m.github.io/styles/jm-mgcill-v9" rel="self"/>
-    <link href="https://lawjournal.mcgill.ca/fr/manuel-de-reference/" rel="documentation"/>
+    <title>JM McGill 9e Patch Branch 2 [dt fix]</title>
+    <id>https://github.com/dntessaro/jm-styles/blob/publication-info-fix/jm-mcgill-9-patch.csl</id>
+    <link href="" rel="self"/>
+    <link href="" rel="documentation"/>
     <author>
       <name>Samuel Gagnon</name>
       <email>gagnon-samuel@outlook.com</email>
@@ -115,6 +115,10 @@
         <single>at no</single>
         <multiple>at nos</multiple>
       </term>
+      <term name="issue" form="verb-short">
+        <single>no</single>
+        <multiple>nos</multiple>
+      </term>
       <term name="accessed">last visited</term>
       <term name="issue" form="long">No</term>
       <term name="issue" form="verb">Catalogue No</term>
@@ -140,8 +144,8 @@
       <term name="close-quote" form="short">)</term>
       <term name="open-inner-quote" form="short">:</term>
       <term name="close-inner-quote" form="short">)</term>
-      <term name="ordinal-02">d</term>
-      <term name="ordinal-03">d</term>
+      <term name="ordinal-02">nd</term>
+      <term name="ordinal-03">rd</term>
       <term name="section" form="short">
         <single>s</single>
         <multiple>ss</multiple>
@@ -1128,10 +1132,17 @@
   </macro>
   <macro name="series-info">
     <group delimiter=", ">
-       <text variable="volume-title" font-style="italic"/>
-     <text variable="collection-title" strip-periods="true" font-style="italic"/>
-<!--  <number variable="collection-number"/> commented out - unclear how series # would be used in McGill -->
-    </group>
+      <text variable="volume-title" font-style="italic"/>
+      <text variable="collection-title"/>
+	</group>
+    <group delimiter=" ">
+	    <choose>
+		 <if variable="collection-number" match="all">
+		  <text term="issue" form="verb-short" prefix=", "/>
+	      <text variable="collection-number"/>
+		 </if>
+		</choose>
+	</group>
   </macro>
   <macro name="sort-by-type">
     <choose>
